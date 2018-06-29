@@ -2,9 +2,14 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import NavPanel from "./components/NavPanel";
+import Vacancy from "./components/Vacancy";
+import fixtures from "./components/fixtures";
 
 class App extends Component {
+
     render() {
+        const fixture = fixtures.slice();
+        console.log("value:", fixture[0].description);
         return (
             <div>
                 <div className="App">
@@ -15,6 +20,7 @@ class App extends Component {
                     <NavPanel/>
                 </div>
 
+                <Vacancy name={fixture[0].name} description={fixture[0].description} author={fixture[0].author}/>
             </div>
         );
     }
