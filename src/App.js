@@ -11,6 +11,7 @@ class App extends Component {
         const fixture = fixtures.slice();
 
         return (
+
             <div>
                 <div className="App">
                     <header className="App-header">

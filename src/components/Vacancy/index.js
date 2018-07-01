@@ -3,11 +3,6 @@ import "bootswatch/dist/flatly/bootstrap.css"
 import RequirementList from "../RequirementList";
 
 class Vacancy extends Component {
-
-    state = {
-        isMouseOver: false
-    }
-
     render() {
         const vacancy = this.props;
 
