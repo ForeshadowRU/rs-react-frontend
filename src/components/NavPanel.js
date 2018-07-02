@@ -14,8 +14,8 @@ class NavPanel extends Component {
             <div className="collapse navbar-collapse" id="navbarColor01">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">
-                        <Link to="/">
-                            <a className="nav-link">Home <span className="sr-only">(current)</span></a>
+                        <Link to="/" className="nav-link">
+                            Home <span className="sr-only">(current)</span>
                         </Link>
                     </li>
                     <li className="nav-item">
