@@ -24,7 +24,7 @@ class Vacancy extends Component {
                     <RequirementList requirements={vacancy.requirements}/>
                 </div>
                 <div className="card-footer">
-                    <button className="btn btn-info float-right">Add to bookmark</button>
+                    <button className="btn btn-dark">Expand</button>
                 </div>
 
             </div>

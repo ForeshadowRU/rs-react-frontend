@@ -43,13 +43,13 @@ class SignUpForm extends Component {
                     <div className="form-group">
 
                         <label htmlFor="password">Password:</label>
-                        <input type="text" className="form-control" id="password"
+                        <input type="password" className="form-control" id="password"
                                placeholder="Password"/>
                     </div>
                     <div className="form-group">
 
                         <label htmlFor="rpassword">Repeat password:</label>
-                        <input type="text" className="form-control" id="rpassword"
+                        <input type="password" className="form-control" id="rpassword"
                                placeholder="Repeat Password"/>
                     </div>
 
@@ -70,6 +70,18 @@ class SignUpForm extends Component {
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with
                             anyone else.
                         </small>
+                    </div>
+                    <div className="form-group">
+
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" className="form-control" id="password"
+                               placeholder="Password"/>
+                    </div>
+                    <div className="form-group">
+
+                        <label htmlFor="rpassword">Repeat password:</label>
+                        <input type="password" className="form-control" id="rpassword"
+                               placeholder="Repeat Password"/>
                     </div>
                 </div>
             );
