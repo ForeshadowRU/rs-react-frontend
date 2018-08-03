@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import NavPanel from "./components/NavPanel";
-import fixtures from "./components/fixtures";
+import fixtures from "./fixtures/vacancies";
 import VacancyList from "./components/VacancyList";
+import {connect} from "react-redux";
 
 class App extends Component {
 
@@ -21,7 +22,7 @@ class App extends Component {
                     <NavPanel/>
                 </div>
 
-                <VacancyList vacancies={fixture}/>
+                <VacancyList vacancies={this.props.vacancies}/>
 
 
             </div>
@@ -29,4 +30,11 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect(
+    state => ({
+        vacancies: state.vacancies,
+    }),
+    dispatch => ({})
+)
+(App);
+
