@@ -7,7 +7,8 @@ export default [
         requirements: [
             {primary: true, name: "JavaScript", level: 5},
             {primary: true, name: "NodeJS", level: 6},
-            {primary: false, name: "HTML", level: 2}]
+            {primary: false, name: "HTML", level: 2}],
+        publishDate: new Date(2018, 2, 15).toDateString()
     },
 
     {
@@ -18,16 +19,18 @@ export default [
         requirements: [
             {primary: true, name: "Spring", level: 8},
             {primary: true, name: "Java", level: 6},
-            {primary: false, name: "Rest", level: 5}]
+            {primary: false, name: "Rest", level: 5}],
+        publishDate: new Date(2018, 2, 26).toDateString()
     },
     {
-        id: 1,
+        id: 2,
         name: "Java Android Developer",
         author: "Hello World Tech",
         description: "Tut nada progat' na Jawke i Springe",
         requirements: [
             {primary: true, name: "Spring", level: 8},
             {primary: true, name: "Java", level: 6},
-            {primary: false, name: "JavaScript", level: 5}]
+            {primary: false, name: "JavaScript", level: 5}],
+        publishDate: new Date(2018, 2, 12).toDateString()
     }
 ]

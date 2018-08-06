@@ -19,10 +19,11 @@ class RequirementList extends Component {
                         className={this.progressbarColor + (requirement.primary ? "bg-warning" : "bg-info")}
                         role="progressbar"
                         style={{"width": requirement.level * 10 + "%"}}
-                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"/>
+                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">{requirement.level}/10
+                    </div>
                 </div>
             </div>
-        )
+        );
 
 
         return (

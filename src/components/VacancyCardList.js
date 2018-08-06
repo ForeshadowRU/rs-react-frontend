@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import Vacancy from "./Vacancy";
+import VacancyCard from "./VacancyCard";
 
-class VacancyList extends Component {
+class VacancyCardList extends Component {
 
     constructor(props) {
         super(props);
@@ -13,8 +13,7 @@ class VacancyList extends Component {
 
         let result = this.value.map(vacancy =>
             <div className="col-md">
-                <Vacancy name={vacancy.name} description={vacancy.description} author={vacancy.author}
-                         requirements={vacancy.requirements}/>
+                <VacancyCard id={vacancy.id}/>
             </div>
         );
 
@@ -30,4 +29,4 @@ class VacancyList extends Component {
 
 }
 
-export default VacancyList;
+export default VacancyCardList;

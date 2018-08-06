@@ -1,16 +1,18 @@
 import React, {Component} from 'react'
 import "bootswatch/dist/flatly/bootstrap.css"
 import RequirementList from "../RequirementList";
+import {Link} from 'react-router-dom'
+import {connect} from "react-redux";
 
-class Vacancy extends Component {
+class VacancyCard extends Component {
     render() {
-        const vacancy = this.props;
-
+        const vacancy = this.props.vacancy;
+        console.log(vacancy);
         return (
             <div className="card card-info-border">
                 <div className="card-header">
                     <button className="btn btn-outline-danger float-right">x</button>
-                    <h4>{vacancy.name}</h4>
+                    <h4><Link to={"/vacancies/".concat(vacancy.id)}> {vacancy.name}</Link></h4>
 
                     <h6 className="text-muted"><u>{vacancy.author}</u></h6>
                 </div>
@@ -32,4 +34,9 @@ class Vacancy extends Component {
     }
 }
 
-export default Vacancy;
+export default connect(
+    (state, ownProps) => ({
+        vacancy: state.vacancies[ownProps.id],
+    }),
+    dispatch => ({})
+)(VacancyCard);
