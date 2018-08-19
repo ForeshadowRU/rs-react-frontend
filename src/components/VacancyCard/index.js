@@ -1,30 +1,30 @@
 import React, {Component} from 'react'
 import "bootswatch/dist/flatly/bootstrap.css"
 import RequirementList from "../RequirementList";
+import {Link} from 'react-router-dom'
 
-class Vacancy extends Component {
+class VacancyCard extends Component {
     render() {
-        const vacancy = this.props;
-
+        const vacancy = this.props.vacancy;
         return (
             <div className="card card-info-border">
                 <div className="card-header">
                     <button className="btn btn-outline-danger float-right">x</button>
-                    <h4>{vacancy.name}</h4>
+                    <h4><Link to={"/vacancies/".concat(vacancy.id)}> {vacancy.name}</Link></h4>
 
-                    <h6 className="text-muted"><u>{vacancy.author}</u></h6>
+                    <h6 className="text-muted"><u>{vacancy.author.name}</u></h6>
                 </div>
 
 
                 <div className="card-body">
-                    {vacancy.description}
+                    {vacancy.fullDescription}
                 </div>
 
                 <div style={{"margin": "5px"}}>
                     <RequirementList requirements={vacancy.requirements}/>
                 </div>
                 <div className="card-footer">
-                    <button className="btn btn-info float-right">Add to bookmark</button>
+                    <button className="btn btn-dark">Expand</button>
                 </div>
 
             </div>
@@ -32,4 +32,4 @@ class Vacancy extends Component {
     }
 }
 
-export default Vacancy;
+export default VacancyCard;

@@ -1,11 +1,34 @@
 import React, {Component} from 'react'
-import Link from "react-router-dom/es/Link";
+import {connect} from "react-redux";
+import {Link} from 'react-router-dom'
 
 class NavPanel extends Component {
 
+    userBar() {
+        if (this.props.currentUser.name !== "Guest")
+            return (<div className="">
+
+                <form className="form-inline my-2 my-lg-0">
+                    <div style={{marginRight: "50px"}} className="navbar-text">Current
+                        User:<span>{this.props.currentUser.name}</span></div>
+                    <Link to="/signup">
+                        <button className="btn btn-secondary my-2 my-sm-0" type="submit">Log Out</button>
+                    </Link>
+                </form>
+            </div>);
+        else return (
+            <form className="form-inline my-2 my-lg-0">
+                <Link to="/signup">
+                    <button className="btn btn-secondary my-2 my-sm-0" type="submit">Login / Sign Up</button>
+                </Link>
+            </form>
+        )
+    }
+
     render() {
+        const user = this.userBar();
         return <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a className="navbar-brand" href="#">RS</a>
+            <a className="navbar-brand" href="/">RS</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                     aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"/>
@@ -19,20 +42,13 @@ class NavPanel extends Component {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Features</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">About</a>
+                        <Link to="/companies" className="nav-link">
+                            Companies <span className="sr-only">(current)</span>
+                        </Link>
                     </li>
                 </ul>
-                <form className="form-inline my-2 my-lg-0">
-                    <Link to="/signup">
-                        <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </Link>
-                </form>
+                {user}
+
             </div>
         </nav>
     }
@@ -40,4 +56,9 @@ class NavPanel extends Component {
 
 }
 
-export default NavPanel;
+export default connect(
+    state => ({
+        currentUser: state.currentUser,
+    }),
+    dispatch => ({})
+)(NavPanel);
