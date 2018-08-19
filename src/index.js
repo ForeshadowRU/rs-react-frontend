@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Route, Switch} from 'react-router-dom'
 import {ConnectedRouter} from 'connected-react-router'
 import './index.css';
-import SignUp from './components/SignUp/Registration'
+import SignUp from './components/Authentication/Authentication'
 import Home from './Home';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux'

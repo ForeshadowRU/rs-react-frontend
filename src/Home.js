@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import logo from './resources/svg/logo.svg';
 import './App.css';
 import NavPanel from "./components/NavPanel";
 import VacancyCardList from "./components/VacancyCardList";
@@ -21,6 +21,7 @@ class Home extends Component {
                 vacancies: (nextProps.vacancies) ? nextProps.vacancies : this.state.vacancies,
             }
         )
+
     }
 
     shouldComponentUpdate() {
