@@ -4,7 +4,9 @@ import './App.css';
 import NavPanel from "./components/NavPanel";
 import VacancyCardList from "./components/VacancyCardList";
 import {connect} from "react-redux";
-import {asyncFetchVacancies} from "./functions";
+import {asyncFetchVacancies, getLoadingAnimation} from "./functions";
+import {fetchVacancies} from "./actionCreators";
+import cubeLoading from './resources/svg/cube-loading.gif'
 
 class Home extends Component {
 
@@ -12,6 +14,7 @@ class Home extends Component {
         super(props);
         this.state = {
             vacancies: (props.vacancies) ? props.vacancies : [],
+            isFetching: props.isFetching,
         }
     }
 
@@ -19,6 +22,7 @@ class Home extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
                 vacancies: (nextProps.vacancies) ? nextProps.vacancies : this.state.vacancies,
+            isFetching: nextProps.isFetching,
             }
         )
 
@@ -34,6 +38,7 @@ class Home extends Component {
     }
 
     render() {
+        console.log(this.state.isFetching);
         return (
 
             <div>
@@ -44,7 +49,12 @@ class Home extends Component {
                     </header>
                     <NavPanel/>
                 </div>
-                <VacancyCardList vacancies={this.state.vacancies}/>
+                <div>
+                    {(this.state.isFetching) ?
+                        getLoadingAnimation(cubeLoading, "Fetching Data")
+                        :
+                        <VacancyCardList vacancies={this.state.vacancies}/>}
+                </div>
             </div>
         );
     }
@@ -52,13 +62,14 @@ class Home extends Component {
 
 export default connect(
     store => {
-        console.log("STORE:", store);
         return {
-            vacancies: store.vacancies.slice(),
+            vacancies: store.vacancies.values.slice(),
+            isFetching: store.vacancies.isFetching,
         }
     },
     dispatch => ({
         onFetchVacancies: () => {
+            dispatch(fetchVacancies());
             dispatch(asyncFetchVacancies());
         }
     })

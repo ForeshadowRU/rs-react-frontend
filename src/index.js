@@ -7,7 +7,6 @@ import SignUp from './components/Authentication/Authentication'
 import Home from './Home';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux'
-import vacancies from "./fixtures/vacancies";
 import companies from "./fixtures/companies"
 import CompaniesPage from "./components/CompaniesPage"
 import CompanyPage from './components/CompanyPage'
@@ -30,10 +29,6 @@ ReactDOM.render(
     </Provider>
     , document.getElementById('root')
 );
-vacancies.forEach((vacancy) => store.dispatch({
-    type: "ADD_VACANCY",
-    payload: vacancy
-}));
 
 companies.forEach((company) => store.dispatch(
     {

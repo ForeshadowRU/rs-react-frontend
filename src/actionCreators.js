@@ -7,8 +7,8 @@ export const DELETE_VACANCY = "DELETE VACANCY";
 export const FETCH_COMPANY_START = "FETCH_COMPANY_START";
 export const DELETE_COMPANY = "DELETE COMPANY";
 export const FETCH_COMPANY_SUCCESS = "FETCH_COMPANY_SUCCESS";
-export const FETCH_VACANCIES = "FETCH_VACANCIES";
-
+export const FETCH_VACANCIES_SUCCESS = "FETCH_VACANCIES_SUCCESS";
+export const FETCH_VACANCIES = "FETCH_VACANCIES_START";
 
 export function addCompany(company) {
     return {
@@ -52,9 +52,15 @@ export function login(user) {
     }
 }
 
-export function fetchVacancies(data) {
+export function fetchVacancies() {
     return {
-        type: FETCH_VACANCIES,
+        type: FETCH_VACANCIES
+    }
+}
+
+export function fetchVacanciesSuccessfull(data) {
+    return {
+        type: FETCH_VACANCIES_SUCCESS,
         payload: data
     }
 

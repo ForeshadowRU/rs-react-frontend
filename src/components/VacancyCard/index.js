@@ -25,7 +25,7 @@ class VacancyCard extends Component {
                     <RequirementList requirements={vacancy.requirements}/>
                 </div>
                 <div className="card-footer">
-                    <button className="btn btn-dark">Expand</button>
+                    <span className="float-right">Created At: {vacancy.creationDate.split("T")[0]}</span>
                 </div>
 
             </div>

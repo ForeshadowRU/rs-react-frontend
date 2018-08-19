@@ -35,7 +35,7 @@ class VacancyPage extends Component {
 
 export default connect(
     (state, ownProps) => ({
-        vacancy: state.vacancies.filter(vacancy => vacancy.id === ownProps.match.params.id)[0],
+        vacancy: state.vacancies.values.filter(vacancy => vacancy.id === ownProps.match.params.id)[0],
         ownProps
     }),
     dispatch => ({})
