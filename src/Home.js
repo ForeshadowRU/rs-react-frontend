@@ -4,8 +4,33 @@ import './App.css';
 import NavPanel from "./components/NavPanel";
 import VacancyCardList from "./components/VacancyCardList";
 import {connect} from "react-redux";
+import {asyncFetchVacancies} from "./functions";
 
 class Home extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            vacancies: (props.vacancies) ? props.vacancies : [],
+        }
+    }
+
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+                vacancies: (nextProps.vacancies) ? nextProps.vacancies : this.state.vacancies,
+            }
+        )
+    }
+
+    shouldComponentUpdate() {
+        return true;
+    }
+
+    componentDidMount() {
+
+        this.props.onFetchVacancies();
+    }
 
     render() {
         return (
@@ -18,19 +43,23 @@ class Home extends Component {
                     </header>
                     <NavPanel/>
                 </div>
-
-                <VacancyCardList vacancies={this.props.vacancies}/>
-
-
+                <VacancyCardList vacancies={this.state.vacancies}/>
             </div>
         );
     }
 }
 
 export default connect(
-    state => ({
-        vacancies: state.vacancies,
-    }),
-    dispatch => ({})
+    store => {
+        console.log("STORE:", store);
+        return {
+            vacancies: store.vacancies.slice(),
+        }
+    },
+    dispatch => ({
+        onFetchVacancies: () => {
+            dispatch(asyncFetchVacancies());
+        }
+    })
 )(Home);
 

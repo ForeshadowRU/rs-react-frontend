@@ -10,7 +10,6 @@ class RequirementList extends Component {
 
     render() {
 
-
         let result = this.value.map(requirement =>
             <div style={{"margin": "10px"}}>
                 <h4>{requirement.name}</h4>
