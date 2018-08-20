@@ -1,15 +1,14 @@
-const initialState = {
-    name: "Guest",
-    password: null,
-    privileges: ["GUEST"],
+import {USER_AUTH, USER_LOGOUT} from "../actionCreators";
 
+const initialState = {
+    isFetching: false,
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case "USER_LOGIN_SUCCESSFUL":
+        case USER_AUTH:
             return action.payload;
-        case "USER_LOGOUT_SUCCESSFUL":
+        case USER_LOGOUT:
             return initialState;
         default:
             return state;

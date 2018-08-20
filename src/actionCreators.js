@@ -1,6 +1,6 @@
 export const ADD_COMPANY = "ADD_COMPANY";
 export const REMOVE_COMPANY = "REMOVE_COMPANY";
-export const USER_AUTH = "ADD_COMPANY";
+export const USER_AUTH = "USER_AUTH";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const ADD_VACANCY = "ADD_VACANCY";
 export const DELETE_VACANCY = "DELETE VACANCY";
@@ -9,6 +9,7 @@ export const DELETE_COMPANY = "DELETE COMPANY";
 export const FETCH_COMPANY_SUCCESS = "FETCH_COMPANY_SUCCESS";
 export const FETCH_VACANCIES_SUCCESS = "FETCH_VACANCIES_SUCCESS";
 export const FETCH_VACANCIES = "FETCH_VACANCIES_START";
+export const INVALIDATE_VACANCIES = "INVALIDATE_VACANCIES";
 
 export function addCompany(company) {
     return {
@@ -55,6 +56,12 @@ export function login(user) {
 export function fetchVacancies() {
     return {
         type: FETCH_VACANCIES
+    }
+}
+
+export function invalidateVacancies() {
+    return {
+        type: INVALIDATE_VACANCIES
     }
 }
 

@@ -5,7 +5,7 @@ import NavPanel from "./components/NavPanel";
 import VacancyCardList from "./components/VacancyCardList";
 import {connect} from "react-redux";
 import {asyncFetchVacancies, getLoadingAnimation} from "./functions";
-import {fetchVacancies} from "./actionCreators";
+import {fetchVacancies, INVALIDATE_VACANCIES} from "./actionCreators";
 import cubeLoading from './resources/svg/cube-loading.gif'
 
 class Home extends Component {
@@ -15,26 +15,37 @@ class Home extends Component {
         this.state = {
             vacancies: (props.vacancies) ? props.vacancies : [],
             isFetching: props.isFetching,
+            timestamp: props.timestamp,
         }
     }
 
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-                vacancies: (nextProps.vacancies) ? nextProps.vacancies : this.state.vacancies,
-            isFetching: nextProps.isFetching,
-            }
-        )
+        if (nextProps.invalidated) {
+            this.props.onFetchVacancies();
+            this.setState({...this.state, isFetching: true});
+        }
+        else
+            this.setState({
+                    vacancies: (nextProps.vacancies) ? nextProps.vacancies : this.state.vacancies,
+                    isFetching: nextProps.isFetching,
+                    timestamp: nextProps.timestamp,
+                    invalidated: nextProps.invalidated,
+                }
+            )
 
     }
 
-    shouldComponentUpdate() {
-        return true;
+    shouldComponentUpdate(nextProps) {
+        return parseInt(this.state.timestamp - new Date(), 10) / 1000 > 120 || nextProps.invalidated;
+
     }
 
     componentDidMount() {
 
-        this.props.onFetchVacancies();
+        if (this.props.vacancies.length === 0)
+            this.props.onFetchVacancies();
+
     }
 
     render() {
@@ -50,7 +61,8 @@ class Home extends Component {
                     <NavPanel/>
                 </div>
                 <div>
-                    {(this.state.isFetching) ?
+
+                    {(this.props.isFetching) ?
                         getLoadingAnimation(cubeLoading, "Fetching Data")
                         :
                         <VacancyCardList vacancies={this.state.vacancies}/>}
@@ -65,12 +77,17 @@ export default connect(
         return {
             vacancies: store.vacancies.values.slice(),
             isFetching: store.vacancies.isFetching,
+            timestamp: store.vacancies.timestamp,
+            invalidated: store.vacancies.invalidated,
         }
     },
     dispatch => ({
         onFetchVacancies: () => {
             dispatch(fetchVacancies());
             dispatch(asyncFetchVacancies());
+        },
+        invalidateVacancies: () => {
+            dispatch({type: INVALIDATE_VACANCIES})
         }
     })
 )(Home);

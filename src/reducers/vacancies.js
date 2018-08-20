@@ -1,9 +1,16 @@
-import {ADD_VACANCY, DELETE_VACANCY, FETCH_VACANCIES, FETCH_VACANCIES_SUCCESS} from "../actionCreators";
+import {
+    ADD_VACANCY,
+    DELETE_VACANCY,
+    FETCH_VACANCIES,
+    FETCH_VACANCIES_SUCCESS,
+    INVALIDATE_VACANCIES
+} from "../actionCreators";
 
 const initialState = {
     values: [],
     isFetching: false,
     timestamp: new Date(),
+    invalidated: false,
 };
 
 export default function (state = initialState, action) {
@@ -12,7 +19,9 @@ export default function (state = initialState, action) {
         case FETCH_VACANCIES:
             return {...state, isFetching: true};
         case FETCH_VACANCIES_SUCCESS:
-            return {...state, values: action.payload, timestamp: new Date(), isFetching: false};
+            return {...state, values: action.payload, timestamp: new Date(), isFetching: false, invalidated: false};
+        case INVALIDATE_VACANCIES:
+            return {...state, invalidated: true};
         case ADD_VACANCY:
             return {...state, values: state.values.push(action.payload)};
         case DELETE_VACANCY:

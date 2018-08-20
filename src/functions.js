@@ -30,3 +30,8 @@ export const getLoadingAnimation = (source, description) => {
     )
 
 };
+
+export const validateUserRegistrationEntity = (userRegistrationEntity) => {
+
+
+};
