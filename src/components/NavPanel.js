@@ -1,21 +1,28 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom'
+import {logout} from "../actionCreators";
+import persistor from '../index'
 
 class NavPanel extends Component {
 
     userBar() {
-        if (this.props.currentUser.name !== "Guest")
+        if (this.props.currentUser.username)
             return (<div className="">
 
-                <form className="form-inline my-2 my-lg-0">
-                    <div style={{marginRight: "50px"}} className="navbar-text">Current
-                        User:<span>{this.props.currentUser.name}</span></div>
-                    <Link to="/signup">
-                        <button className="btn btn-secondary my-2 my-sm-0" type="submit">Log Out</button>
-                    </Link>
-                </form>
-            </div>);
+                    <form className="form-inline my-2 my-lg-0">
+                        <div style={{marginRight: "50px"}} className="navbar-text">Current
+                            User:<span><Link
+                                to={"/users/".concat(this.props.currentUser.username)}>{this.props.currentUser.username}</Link></span>
+                        </div>
+                        <Link to="/signup">
+                            <button className="btn btn-secondary my-2 my-sm-0" type="button"
+                                    onClick={this.props.onLogout}>Log Out
+                            </button>
+                        </Link>
+                    </form>
+                </div>
+            );
         else return (
             <form className="form-inline my-2 my-lg-0">
                 <Link to="/signup">
@@ -43,8 +50,13 @@ class NavPanel extends Component {
                     </li>
                     <li className="nav-item">
                         <Link to="/companies" className="nav-link">
-                            Companies <span className="sr-only">(current)</span>
+                            Companies <span className="sr-only"/>
                         </Link>
+                    </li>
+                    <li className="nav-item" onClick={this.props.onPurge}>
+
+                        PURGE STORE <span className="sr-only"/>
+
                     </li>
                 </ul>
                 {user}
@@ -60,5 +72,12 @@ export default connect(
     state => ({
         currentUser: state.currentUser,
     }),
-    dispatch => ({})
+    dispatch => ({
+        onLogout: () => {
+            dispatch(logout())
+        },
+        onPurge: () => {
+            persistor.purge().then(response => console.log(response, "PURGED"));
+        }
+    })
 )(NavPanel);

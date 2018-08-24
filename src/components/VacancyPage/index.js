@@ -16,7 +16,10 @@ class VacancyPage extends Component {
                         <h2>{vacancy.name}</h2>
                     </div>
                     <div className="border-dark">
-                        <h4><u className="text-muted">Author:</u>{vacancy.author}</h4>
+                        <h4><u className="text-muted">Author:</u>{vacancy.author.name}</h4>
+                    </div>
+                    <div className="border-dark">
+                        <p>{vacancy.fullDescription}</p>
                     </div>
                     <div className="border-dark">
                         Published At:<h6>{vacancy.publishDate}</h6>
@@ -32,7 +35,8 @@ class VacancyPage extends Component {
 
 export default connect(
     (state, ownProps) => ({
-        vacancy: state.vacancies[ownProps.match.params.id],
+        vacancy: state.vacancies.values.filter(vacancy => vacancy.id === ownProps.match.params.id)[0],
+        ownProps
     }),
     dispatch => ({})
 )(VacancyPage);

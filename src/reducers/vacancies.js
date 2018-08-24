@@ -1,20 +1,32 @@
-import {FETCH_VACANCIES} from "../actionCreators";
+import {
+    ADD_VACANCY,
+    DELETE_VACANCY,
+    FETCH_VACANCIES,
+    FETCH_VACANCIES_SUCCESS,
+    INVALIDATE_VACANCIES
+} from "../constants";
 
-const initialState = [];
+const initialState = {
+    values: [],
+    isFetching: false,
+    timestamp: new Date(),
+    invalidated: false,
+};
 
 export default function (state = initialState, action) {
 
     switch (action.type) {
         case FETCH_VACANCIES:
-            let slice = [];
-            for (let i = 0; i < action.payload.length; i++) {
-                slice = slice.concat(action.payload[i]);
-            }
-            return slice;
-        case "ADD_VACANCY":
-            return [...state, action.payload];
-        case "DELETE_VACANCY_BY_ID":
-            return state.filter(vacancy => vacancy.id !== action.payload);
+            return {...state, isFetching: true};
+        case FETCH_VACANCIES_SUCCESS:
+            return {...state, values: action.payload, timestamp: new Date(), isFetching: false, invalidated: false};
+        case INVALIDATE_VACANCIES:
+            return {...state, invalidated: true};
+        case ADD_VACANCY:
+            return {...state, values: state.values.push(action.payload)};
+        case DELETE_VACANCY:
+            return {...state, values: state.values.filter(vacancy => vacancy.id !== action.payload)};
+
         default:
             return state;
     }

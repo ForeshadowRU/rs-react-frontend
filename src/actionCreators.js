@@ -1,14 +1,17 @@
-export const ADD_COMPANY = "ADD_COMPANY";
-export const REMOVE_COMPANY = "REMOVE_COMPANY";
-export const USER_AUTH = "ADD_COMPANY";
-export const USER_LOGOUT = "USER_LOGOUT";
-export const ADD_VACANCY = "ADD_VACANCY";
-export const DELETE_VACANCY = "DELETE VACANCY";
-export const FETCH_COMPANY_START = "FETCH_COMPANY_START";
-export const DELETE_COMPANY = "DELETE COMPANY";
-export const FETCH_COMPANY_SUCCESS = "FETCH_COMPANY_SUCCESS";
-export const FETCH_VACANCIES = "FETCH_VACANCIES";
-
+import {
+    ADD_COMPANY,
+    DELETE_COMPANY,
+    FETCH_COMPANY_START,
+    FETCH_COMPANY_SUCCESS,
+    FETCH_USERS_STARTED,
+    FETCH_USERS_SUCCESS,
+    FETCH_VACANCIES,
+    FETCH_VACANCIES_SUCCESS,
+    INVALIDATE_VACANCIES,
+    REMOVE_COMPANY,
+    USER_AUTH_SUCCESSFUL,
+    USER_LOGOUT
+} from "./constants";
 
 export function addCompany(company) {
     return {
@@ -38,6 +41,19 @@ export function fetchCompanySuccess(company) {
     }
 }
 
+export function fetchUsersSuccess(payload) {
+    return {
+        type: FETCH_USERS_SUCCESS,
+        payload: payload,
+    }
+}
+
+export function fetchUsersStarted() {
+    return {
+        type: FETCH_USERS_STARTED
+    }
+}
+
 export function deleteCompany(companyId) {
     return {
         type: DELETE_COMPANY,
@@ -47,14 +63,26 @@ export function deleteCompany(companyId) {
 
 export function login(user) {
     return {
-        type: USER_AUTH,
+        type: USER_AUTH_SUCCESSFUL,
         payload: user,
     }
 }
 
-export function fetchVacancies(data) {
+export function fetchVacancies() {
     return {
-        type: FETCH_VACANCIES,
+        type: FETCH_VACANCIES
+    }
+}
+
+export function invalidateVacancies() {
+    return {
+        type: INVALIDATE_VACANCIES
+    }
+}
+
+export function fetchVacanciesSuccessfull(data) {
+    return {
+        type: FETCH_VACANCIES_SUCCESS,
         payload: data
     }
 

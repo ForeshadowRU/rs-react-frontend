@@ -12,7 +12,7 @@ class VacancyCardList extends Component {
 
         if (!this.props.vacancies || this.props.vacancies.length === 0)
             return (
-                <div className="card-info-border">
+                <div className="card-info-border-users">
                     <span>No Data Available</span>
                 </div>
             );

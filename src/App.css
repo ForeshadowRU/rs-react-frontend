@@ -31,11 +31,25 @@
     }
 }
 
-.card-info-border {
+.card-info-border-users {
     margin-top: 15px;
 }
 
-.card-info-border:hover {
+.card-info-border-users:hover {
     border-color: #3498DB;
 
+}
+
+.card-info-border-admins {
+    margin-top: 15px;
+}
+
+.card-info-border-admins:hover {
+    border-color: #db8323;
+
+}
+
+.username {
+    color: #3498DB;
+    text-underline: #3498DB;
 }

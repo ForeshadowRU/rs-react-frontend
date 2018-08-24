@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import NavPanel from "../NavPanel";
 import FormHolder from "./FormHolder";
 
-class Registration extends Component {
+class Authentication extends Component {
 
     render() {
         return (
@@ -16,4 +16,4 @@ class Registration extends Component {
     }
 }
 
-export default Registration;
+export default Authentication;
