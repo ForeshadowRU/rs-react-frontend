@@ -2,20 +2,26 @@ import React, {Component} from 'react'
 import connect from "react-redux/es/connect/connect";
 import axios from "axios";
 import {BACKEND_URL, USER_AUTH_SUCCESSFUL} from "../../constants";
+import {Redirect} from "react-router-dom";
 
 class LoginForm extends Component {
     constructor(props) {
         super(props);
+        console.log("KAK TO TAK:", props);
         this.state = {
             loginInputValue: '',
-            passwordInputValue: ''
+            passwordInputValue: '',
+            successful: false,
         };
     }
 
-    submitLoginRequest() {
-        console.log(this.state.loginInputValue);
-        console.log(this.state.passwordInputValue);
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currentUser.username !== this.props.currentUser.username) {
+            this.setState({...this.state, successful: true})
+        }
+    }
 
+    submitLoginRequest() {
         const Json = JSON.stringify({
             login: this.state.loginInputValue,
             password: this.state.passwordInputValue
@@ -36,10 +42,18 @@ class LoginForm extends Component {
         });
     }
 
+    componentDidMount() {
+        if (this.props.currentUser.username) {
+            this.setState({...this.state, successful: true})
+        }
+    }
 
     render() {
 
-
+        if (this.state.successful) {
+            const path = "/user/".concat(this.props.currentUser.username);
+            return <Redirect to={path}/>;
+        }
         return (
             <form method="POST" style={{margin: "15px"}}>
                 <fieldset>
@@ -83,7 +97,8 @@ export default connect(
         onSubmission: (json) => {
             console.log("DISPATCHING WITH:", json);
             dispatch(asyncPost(json))
-        }
+        },
+
     }))(LoginForm);
 
 export const asyncPost = (json) => dispatch => {
@@ -97,12 +112,11 @@ export const asyncPost = (json) => dispatch => {
         .then(
             (response) => {
                 console.log(response);
-                if (response.status === 200) {
-                    dispatch({
-                        type: USER_AUTH_SUCCESSFUL,
-                        payload: response.data,
-                    });
-                }
+                dispatch({
+                    type: USER_AUTH_SUCCESSFUL,
+                    payload: response.data,
+                });
+
             }
         ).catch(error => console.log(error));
 

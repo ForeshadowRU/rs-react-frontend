@@ -25,6 +25,7 @@ class UserPage extends Component {
 
     componentWillReceiveProps(nextProps) {
         let user = nextProps.users.values.filter(value => value.username === nextProps.ownProps.match.params.username)[0];
+        if (!user && !this.props.users.isFetching) this.props.onFetchUsers();
         let vacancies = nextProps.vacancies.values.filter(vacancy => vacancy.publisher === user.username);
         this.setState = {
             userToDisplay: user,
@@ -97,7 +98,8 @@ class UserPage extends Component {
                     </ul>
                     <div id="myTabContent" className="tab-content">
                         <div className="tab-pane fade show active" id="information">
-                            {info.map(key => <div><strong>{key}:</strong><h5>{user[key] && user[key].toString()}</h5>
+                            {info.map(key => <div style={{margin: "15px"}}><strong>{key}:</strong>
+                                <h5>{user[key] && user[key].toString()}</h5>
                             </div>)}
                         </div>
                         <div className="tab-pane fade" id="posted-vacancies">
@@ -166,5 +168,6 @@ export default connect(
         },
         onLogout: () => {
             dispatch(logout())
-        }
+        },
+        dispatch: dispatch
     }))(UserPage);

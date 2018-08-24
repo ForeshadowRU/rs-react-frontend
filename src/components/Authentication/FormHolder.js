@@ -1,21 +1,14 @@
 import React, {Component} from 'react'
 import LoginForm from "./LoginForm";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import connect from "react-redux/es/connect/connect";
 import {logout} from "../../actionCreators";
 
 class FormHolder extends Component {
 
     alreadyLoggedIn() {
-        return (
-            <div className="row" style={{justifyContent: "center", marginTop: "25px"}}>
-                <div className="alert alert-warning col-5">
-                    <button type="button" className="close" data-dismiss="alert">&times;</button>
-                    <h4 className="alert-heading">Warning!</h4>
-                    <p className="mb-0">You already logged in as: {this.props.currentUser.username}</p>
-                    <button className="btn btn-info" onClick={this.props.onLogout}>Log out</button>
-                </div>
-            </div>)
+        return <Redirect to={"/users/".concat(this.props.currentUser.username)}/>
+
     }
 
     render() {

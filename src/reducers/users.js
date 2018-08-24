@@ -14,7 +14,9 @@ export default function (state = initialState, action) {
         case FETCH_USERS_SUCCESS:
             return {...state, isFetching: false, invalidated: false, values: action.payload};
         case ADD_USER:
-            return {...state, values: state.values.push(action.payload)};
+            let values = state.values.slice();
+            values.push(action.payload);
+            return {...state, values: values};
         case DELETE_USER:
             return {...state, values: state.values.filter((value => value.username !== action.payload.username))};
         default:
