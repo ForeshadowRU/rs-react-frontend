@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import connect from "react-redux/es/connect/connect";
 import axios from "axios";
-import {BACKEND_URL} from "../../constants";
-import {USER_AUTH} from "../../actionCreators";
+import {BACKEND_URL, USER_AUTH_SUCCESSFUL} from "../../constants";
 
 class LoginForm extends Component {
     constructor(props) {
@@ -100,7 +99,7 @@ export const asyncPost = (json) => dispatch => {
                 console.log(response);
                 if (response.status === 200) {
                     dispatch({
-                        type: USER_AUTH,
+                        type: USER_AUTH_SUCCESSFUL,
                         payload: response.data,
                     });
                 }

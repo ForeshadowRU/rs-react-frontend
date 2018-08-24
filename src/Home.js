@@ -5,7 +5,8 @@ import NavPanel from "./components/NavPanel";
 import VacancyCardList from "./components/VacancyCardList";
 import {connect} from "react-redux";
 import {asyncFetchVacancies, getLoadingAnimation} from "./functions";
-import {fetchVacancies, INVALIDATE_VACANCIES} from "./actionCreators";
+import {fetchUsersStarted, fetchUsersSuccess, fetchVacancies} from "./actionCreators";
+import {INVALIDATE_VACANCIES} from "./constants";
 import cubeLoading from './resources/svg/cube-loading.gif'
 
 class Home extends Component {
@@ -21,7 +22,8 @@ class Home extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.invalidated) {
+        console.log(nextProps);
+        if (nextProps.invalidated && !nextProps.isFetching) {
             this.props.onFetchVacancies();
             this.setState({...this.state, isFetching: true});
         }
@@ -36,11 +38,6 @@ class Home extends Component {
 
     }
 
-    shouldComponentUpdate(nextProps) {
-        return parseInt(this.state.timestamp - new Date(), 10) / 1000 > 120 || nextProps.invalidated;
-
-    }
-
     componentDidMount() {
 
         if (this.props.vacancies.length === 0)
@@ -49,7 +46,7 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.state.isFetching);
+        console.log(this.props.isFetching);
         return (
 
             <div>
@@ -79,6 +76,7 @@ export default connect(
             isFetching: store.vacancies.isFetching,
             timestamp: store.vacancies.timestamp,
             invalidated: store.vacancies.invalidated,
+            users: store.users.values,
         }
     },
     dispatch => ({
@@ -88,6 +86,10 @@ export default connect(
         },
         invalidateVacancies: () => {
             dispatch({type: INVALIDATE_VACANCIES})
+        },
+        onFetchUsers: () => {
+            dispatch(fetchUsersStarted());
+            dispatch(fetchUsersSuccess())
         }
     })
 )(Home);

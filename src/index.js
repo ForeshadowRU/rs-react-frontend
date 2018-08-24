@@ -8,7 +8,7 @@ import Home from './Home';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux'
 import companies from "./fixtures/companies"
-import CompaniesPage from "./components/CompaniesPage"
+import CompaniesPage from "./components/CompanyList"
 import CompanyPage from './components/CompanyPage'
 import VacancyPage from './components/VacancyPage'
 import configureStore from './configureStore'
@@ -17,9 +17,10 @@ import {getLoadingAnimation} from "./functions";
 import cubeLoading from './resources/svg/cube-loading.gif'
 import {PersistGate} from 'redux-persist/integration/react'
 import RegistrationForm from "./components/Authentication/RegistrationForm";
+import UserPage from './components/UserPage'
+
 
 const {store, persistor} = configureStore();
-
 ReactDOM.render(
     <PersistGate loading={getLoadingAnimation(cubeLoading, "Loading...")} persistor={persistor}>
         <Provider store={store}>
@@ -32,6 +33,7 @@ ReactDOM.render(
                     <Route path='/companies/:id' component={CompanyPage}/>
                     <Route path='/companies' component={CompaniesPage}/>
                     <Route path='/register/' component={RegistrationForm}/>
+                    <Route path='/users/:username' component={UserPage}/>
                 </Switch>
             </ConnectedRouter>
 
@@ -46,5 +48,6 @@ companies.forEach((company) => store.dispatch(
         payload: company
     }
 ));
+export default persistor;
 
 registerServiceWorker();

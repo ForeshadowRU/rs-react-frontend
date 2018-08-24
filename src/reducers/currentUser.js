@@ -1,4 +1,4 @@
-import {USER_AUTH, USER_LOGOUT} from "../actionCreators";
+import {USER_AUTH_ERROR, USER_AUTH_STARTED, USER_AUTH_SUCCESSFUL, USER_LOGOUT} from "../constants";
 
 const initialState = {
     isFetching: false,
@@ -6,8 +6,12 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case USER_AUTH:
-            return action.payload;
+        case USER_AUTH_SUCCESSFUL:
+            return {...action.payload, isFetching: false};
+        case USER_AUTH_STARTED:
+            return {...state, isFetching: true};
+        case USER_AUTH_ERROR:
+            return {...state, isFetching: false};
         case USER_LOGOUT:
             return initialState;
         default:

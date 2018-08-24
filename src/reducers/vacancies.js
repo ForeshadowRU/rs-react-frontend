@@ -4,7 +4,7 @@ import {
     FETCH_VACANCIES,
     FETCH_VACANCIES_SUCCESS,
     INVALIDATE_VACANCIES
-} from "../actionCreators";
+} from "../constants";
 
 const initialState = {
     values: [],

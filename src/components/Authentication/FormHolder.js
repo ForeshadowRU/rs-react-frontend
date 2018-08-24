@@ -23,11 +23,11 @@ class FormHolder extends Component {
         return (
             <div className="row" style={{marginTop: "20px", justifyContent: "center"}}>
 
-                <div className="card card-info-border col-5" style={{width: "35%"}}>
+                <div className="card card-info-border-users col-5" style={{width: "35%"}}>
                     <LoginForm/>
                 </div>
 
-                <div className="card card-info-border col-3" style={{width: "10%"}}>
+                <div className="card card-info-border-users col-3" style={{width: "10%"}}>
                     <form>
                         <div className="form-group">
                             <h4>Don't have an account?</h4>

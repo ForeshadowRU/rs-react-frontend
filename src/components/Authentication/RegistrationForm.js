@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import connect from "react-redux/es/connect/connect";
 import NavPanel from "../NavPanel";
 import axios from "axios";
-import {BACKEND_URL} from "../../constants";
-import {USER_AUTH} from "../../actionCreators";
+import {BACKEND_URL, USER_AUTH_ERROR, USER_AUTH_STARTED, USER_AUTH_SUCCESSFUL} from "../../constants";
+import {getLoadingAnimation} from "../../functions";
+import cube from '../../resources/svg/cube-loading.gif'
 
 class RegistrationForm extends Component {
     constructor(props) {
@@ -83,6 +84,17 @@ class RegistrationForm extends Component {
         else return <div/>
     }
 
+    static showLoadingIndication() {
+        return getLoadingAnimation(cube, "");
+    }
+
+    showRegisterButton() {
+        return <button className="btn btn-info col-6" style={{alignment: "justify"}} type="button"
+                       onClick={this.submitRequest.bind(this)}>
+            Register
+        </button>
+    }
+
     render() {
 
 
@@ -91,7 +103,7 @@ class RegistrationForm extends Component {
                 <NavPanel/>
                 <div className="row" style={{justifyContent: "center"}}>
 
-                    <form method="POST" style={{margin: "15px"}} className="card card-info-border col-6">
+                    <form method="POST" style={{margin: "15px"}} className="card card-info-border-users col-6">
                         <fieldset>
                             <legend>Registration</legend>
                             <div className="form-group row" style={{marginLeft: "10px", marginRight: "10px"}}>
@@ -139,13 +151,10 @@ class RegistrationForm extends Component {
                             </div>
 
                             <div className="form-group row" style={{margin: "10px"}}>
-                                <button className="btn btn-info col-12" style={{alignment: "justify"}} type="button"
-                                        onClick={this.submitRequest.bind(this)}>
-                                    Register
-                                </button>
+
                             </div>
                         </fieldset>
-
+                        {(this.props.isFetching === true) ? RegistrationForm.showLoadingIndication() : this.showRegisterButton()}
                     </form>
                 </div>
             </div>
@@ -155,7 +164,8 @@ class RegistrationForm extends Component {
 
 export default connect(
     (state, ownProps) => ({
-        companies: state.companies
+        companies: state.companies,
+        isFetching: state.currentUser.isFetching
     }),
     dispatch => ({
         onSubmission: (json) => {
@@ -165,6 +175,7 @@ export default connect(
     }))(RegistrationForm);
 
 const asyncPost = (json) => dispatch => {
+    dispatch({type: USER_AUTH_STARTED});
     let config = {
         headers: {
             'Content-Type': 'application/json',
@@ -176,11 +187,17 @@ const asyncPost = (json) => dispatch => {
             (response) => {
                 console.log(response);
                 dispatch({
-                    type: USER_AUTH,
+                    type: USER_AUTH_SUCCESSFUL,
                     payload: response.data,
                 });
 
             }
-        ).catch(error => console.log(error));
+        ).catch(error => {
+            dispatch({
+                type: USER_AUTH_ERROR,
+            });
+            console.log(error);
+        }
+    );
 
 };

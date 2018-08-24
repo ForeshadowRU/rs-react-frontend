@@ -7,7 +7,7 @@ class VacancyCard extends Component {
     render() {
         const vacancy = this.props.vacancy;
         return (
-            <div className="card card-info-border">
+            <div className="card card-info-border-users">
                 <div className="card-header">
                     <button className="btn btn-outline-danger float-right">x</button>
                     <h4><Link to={"/vacancies/".concat(vacancy.id)}> {vacancy.name}</Link></h4>

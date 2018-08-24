@@ -1,7 +1,7 @@
 import axios from "axios";
-import {BACKEND_URL} from "./constants";
-import {FETCH_VACANCIES_SUCCESS} from "./actionCreators";
+import {BACKEND_URL, FETCH_VACANCIES_SUCCESS} from "./constants";
 import React from "react";
+import {fetchUsersSuccess} from "./actionCreators";
 
 export const asyncFetchVacancies = () => dispatch => {
 
@@ -9,15 +9,25 @@ export const asyncFetchVacancies = () => dispatch => {
         .then(
             (response) => {
                 console.log("STATUS:", response.status);
-                if (response.status === 200) {
-                    dispatch({
-                        type: FETCH_VACANCIES_SUCCESS,
-                        payload: response.data,
-                    });
-                }
+                dispatch({
+                    type: FETCH_VACANCIES_SUCCESS,
+                    payload: response.data,
+                });
+
             }
         );
 
+};
+
+export const asyncFetchUsers = () => dispatch => {
+    axios.get(BACKEND_URL.concat("/users/"))
+        .then(
+            (response) => {
+                dispatch(
+                    fetchUsersSuccess(response.data)
+                );
+            }
+        ).catch(error => console.log(error));
 };
 
 export const getLoadingAnimation = (source, description) => {

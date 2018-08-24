@@ -1,4 +1,4 @@
-import {ADD_COMPANY, DELETE_COMPANY, FETCH_COMPANY_START, FETCH_COMPANY_SUCCESS} from "../actionCreators";
+import {ADD_COMPANY, DELETE_COMPANY, FETCH_COMPANY_START, FETCH_COMPANY_SUCCESS} from "../constants";
 
 const initialState = [];
 
