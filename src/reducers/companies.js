@@ -1,23 +1,32 @@
-import {ADD_COMPANY, DELETE_COMPANY, FETCH_COMPANY_START, FETCH_COMPANY_SUCCESS} from "../constants";
+import {
+    ADD_COMPANY,
+    DELETE_COMPANY,
+    FETCH_COMPANIES_ERROR,
+    FETCH_COMPANIES_START,
+    FETCH_COMPANIES_SUCCESS
+} from "../constants";
 
-const initialState = [];
+const initialState = {
+    values: [],
+    isFetching: false,
+    timestamp: new Date(),
+};
 
 export default function (state = initialState, action) {
 
     switch (action.type) {
         case ADD_COMPANY:
-            return state.concat(action.payload);
+            let values = state.values.slice();
+            values.push(action.payload);
+            return {...state, values: values};
         case DELETE_COMPANY:
-            return state.filter(company => company.id !== action.payload);
-        case FETCH_COMPANY_SUCCESS:
-            return state.filter((company) => company.id !== action.payload.id).concat(action.payload);
-        case FETCH_COMPANY_START:
-            return state.concat({
-                id: action.payload,
-                isFetching: true
-            });
-        case "FETCH_COMPANY_ERROR":
-            return state;
+            return {...state, values: state.values.filter(company => company.id !== action.payload)};
+        case FETCH_COMPANIES_SUCCESS:
+            return {...state, values: action.payload, isFetching: false, timestamp: new Date()};
+        case FETCH_COMPANIES_START:
+            return {...state, isFetching: true};
+        case FETCH_COMPANIES_ERROR:
+            return {...state, isFetching: false};
         default:
             return state;
     }

@@ -4,9 +4,8 @@ import './App.css';
 import NavPanel from "./components/NavPanel";
 import VacancyCardList from "./components/VacancyCardList";
 import {connect} from "react-redux";
-import {asyncFetchVacancies, getLoadingAnimation} from "./functions";
-import {fetchUsersStarted, fetchUsersSuccess, fetchVacancies} from "./actionCreators";
-import {INVALIDATE_VACANCIES} from "./constants";
+import {asyncFetchCompanies, asyncFetchUsers, asyncFetchVacancies, getLoadingAnimation} from "./functions";
+import {fetchCompanyStart, fetchUsersStarted, fetchVacancies} from "./actionCreators";
 import cubeLoading from './resources/svg/cube-loading.gif'
 
 class Home extends Component {
@@ -24,7 +23,7 @@ class Home extends Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps);
         if (nextProps.invalidated && !nextProps.isFetching) {
-            this.props.onFetchVacancies();
+            this.props.onFetchData();
             this.setState({...this.state, isFetching: true});
         }
         else
@@ -41,7 +40,7 @@ class Home extends Component {
     componentDidMount() {
 
         if (this.props.vacancies.length === 0)
-            this.props.onFetchVacancies();
+            this.props.onFetchData();
 
     }
 
@@ -73,24 +72,21 @@ export default connect(
     store => {
         return {
             vacancies: store.vacancies.values.slice(),
-            isFetching: store.vacancies.isFetching,
+            isFetching: store.vacancies.isFetching || store.companies.isFetching || store.users.isFetching,
             timestamp: store.vacancies.timestamp,
             invalidated: store.vacancies.invalidated,
             users: store.users.values,
         }
     },
     dispatch => ({
-        onFetchVacancies: () => {
+        onFetchData: () => {
             dispatch(fetchVacancies());
-            dispatch(asyncFetchVacancies());
-        },
-        invalidateVacancies: () => {
-            dispatch({type: INVALIDATE_VACANCIES})
-        },
-        onFetchUsers: () => {
+            dispatch(fetchCompanyStart());
             dispatch(fetchUsersStarted());
-            dispatch(fetchUsersSuccess())
-        }
+            dispatch(asyncFetchVacancies());
+            dispatch(asyncFetchCompanies());
+            dispatch(asyncFetchUsers())
+        },
     })
 )(Home);
 

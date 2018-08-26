@@ -7,7 +7,6 @@ import Authentication from './components/Authentication/Authentication'
 import Home from './Home';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux'
-import companies from "./fixtures/companies"
 import CompanyList from "./components/CompanyList"
 import CompanyPage from './components/CompanyPage'
 import VacancyPage from './components/VacancyPage'
@@ -42,12 +41,6 @@ ReactDOM.render(
     , document.getElementById('root')
 );
 
-companies.forEach((company) => store.dispatch(
-    {
-        type: "ADD_COMPANY",
-        payload: company
-    }
-));
 export default persistor;
 
 registerServiceWorker();

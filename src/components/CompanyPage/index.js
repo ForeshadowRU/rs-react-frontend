@@ -1,58 +1,49 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import NavPanel from "../NavPanel";
-import axios from "axios";
-import {BACKEND_URL} from "../../constants";
-import {fetchCompanySuccess} from "../../actionCreators";
-
+import {fetchCompanyStart} from "../../actionCreators";
+import {asyncFetchCompany, getLoadingAnimation} from "../../functions";
+import cube from '../../resources/svg/cube-loading.gif'
 
 class CompanyPage extends Component {
 
+
     constructor(props) {
         super(props);
-        if (props.companies && props.companies.filter(company => company.id === props.own.match.params.id).length > 0)
-            this.state = {
-                company: Object.assign({},
-                    props.companies.filter(company => company.id === props.own.match.param.id)[0],
-                    {isFetching: false}),
-            };
-        else {
-            const id = props.own.match.params.id;
-            this.fetchCompany(id);
-            this.state = {
-                company:
-                    {
-                        id: id,
-                        isFetching: true
-                    }
-            }
+        this.state = {
+            isFetching: true
         }
     }
 
-    fetchCompany(id) {
-        this.props.onFetchVacancies(id);
+    componentDidMount() {
+        if ((!this.props.companies || parseInt((this.props.companies.timestamp - new Date()), 10) > 120)
+            && !this.props.isFetching) {
+            let id = this.props.own.match.params.id;
+            this.props.onFetchData(id)
+        }
+        else this.setState({
+            company: this.props.companies.values.filter((company) => company.id === this.props.own.match.params.id)[0],
+            isFetching: false,
+        })
+
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(
-            {
-                company: Object.assign(
-                    {},
-                    nextProps.companies.filter((company) => company.id === nextProps.own.match.params.id)[0],
-                    {isFetching: false}
-                )
-            }
-        );
+        let element = nextProps.companies.filter((company) => company.id === nextProps.own.match.params.id)[0];
+        this.setState({...this.state, company: element, isFetching: nextProps.isFetching});
     }
 
     render() {
-        console.log(this.state);
-        if (this.state.company.isFetching) return (
+        if (this.state.isFetching) return (
             <div>
                 <NavPanel/>
-                <h1 style={{textAlign: "justify"}}> Loading ...</h1>
+                <div className="row card-info-border-users">
+                    <div className="col">{getLoadingAnimation(cube, "Loading...")}</div>
+                </div>
             </div>
         );
+        console.log(this.props);
+        console.log(this.state);
         return <div>
             <NavPanel/>
             <div className="container" style={{borderColor: "blue", borderWidth: "3px"}}>
@@ -73,28 +64,12 @@ class CompanyPage extends Component {
 export default connect(
     (store, ownProps) => ({
         companies: store.companies,
+        isFetching: store.companies.isFetching,
         own: ownProps,
     }),
     dispatch => ({
-        onFetchVacancies: (id) => {
-            const asyncFetchCompany = (id) => dispatch => {
-
-                axios.get(BACKEND_URL.concat("/companies/".concat(id)))
-                    .then(
-                        (response) => {
-                            console.log("STATUS:", response.status);
-                            if (response.status === 200) {
-                                console.log("DISPATCH:", response.data);
-                                dispatch(fetchCompanySuccess(response.data));
-                            }
-                            else if (response.status === 404) {
-
-                            }
-                        }
-                    );
-
-            };
-
+        onFetchData: (id) => {
+            dispatch(fetchCompanyStart());
             dispatch(asyncFetchCompany(id));
         }
 

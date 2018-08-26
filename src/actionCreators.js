@@ -1,8 +1,9 @@
 import {
     ADD_COMPANY,
     DELETE_COMPANY,
-    FETCH_COMPANY_START,
-    FETCH_COMPANY_SUCCESS,
+    FETCH_COMPANIES_ERROR,
+    FETCH_COMPANIES_START,
+    FETCH_COMPANIES_SUCCESS,
     FETCH_USERS_STARTED,
     FETCH_USERS_SUCCESS,
     FETCH_VACANCIES,
@@ -29,18 +30,30 @@ export function removeCompany(id) {
 
 export function fetchCompanyStart(companyId) {
     return {
-        type: FETCH_COMPANY_START,
+        type: FETCH_COMPANIES_START,
         payload: companyId
     }
 }
 
 export function fetchCompanySuccess(company) {
     return {
-        type: FETCH_COMPANY_SUCCESS,
+        type: ADD_COMPANY,
         payload: company
     }
 }
 
+export function fetchCompaniesSuccess(payload) {
+    return {
+        type: FETCH_COMPANIES_SUCCESS,
+        payload: payload
+    }
+}
+
+export function fetchCompaniesError() {
+    return {
+        type: FETCH_COMPANIES_ERROR,
+    }
+}
 export function fetchUsersSuccess(payload) {
     return {
         type: FETCH_USERS_SUCCESS,
@@ -80,7 +93,7 @@ export function invalidateVacancies() {
     }
 }
 
-export function fetchVacanciesSuccessfull(data) {
+export function fetchVacanciesSuccess(data) {
     return {
         type: FETCH_VACANCIES_SUCCESS,
         payload: data

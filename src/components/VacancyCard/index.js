@@ -4,6 +4,25 @@ import RequirementList from "../RequirementList";
 import {Link} from 'react-router-dom'
 
 class VacancyCard extends Component {
+
+    static currencySign(currency) {
+        switch (currency) {
+            case "RUB":
+                return "₽";
+            case "EUR":
+                return "€";
+            case "USD":
+                return "$";
+            default:
+                return currency;
+        }
+    }
+
+    static getTypeLetter(type) {
+        if (type.substr(0, 3) === "PER") return type.split("_")[1][0];
+        else return type[0];
+    }
+
     render() {
         const vacancy = this.props.vacancy;
         return (
@@ -25,7 +44,9 @@ class VacancyCard extends Component {
                     <RequirementList requirements={vacancy.requirements}/>
                 </div>
                 <div className="card-footer">
-                    <span className="float-right">Created At: {vacancy.creationDate.split("T")[0]}</span>
+                    <h6>{vacancy.salary} {VacancyCard.currencySign(vacancy.currency)}/{VacancyCard.getTypeLetter(vacancy.type)}
+                        <span className="float-right">Created At: {vacancy.creationDate.split("T")[0]}</span>
+                    </h6>
                 </div>
 
             </div>

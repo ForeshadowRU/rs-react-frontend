@@ -1,7 +1,13 @@
 import axios from "axios";
-import {BACKEND_URL, FETCH_VACANCIES_SUCCESS} from "./constants";
+import {BACKEND_URL} from "./constants";
 import React from "react";
-import {fetchUsersSuccess} from "./actionCreators";
+import {
+    fetchCompaniesError,
+    fetchCompaniesSuccess,
+    fetchCompanySuccess,
+    fetchUsersSuccess,
+    fetchVacanciesSuccess
+} from "./actionCreators";
 
 export const asyncFetchVacancies = () => dispatch => {
 
@@ -9,15 +15,41 @@ export const asyncFetchVacancies = () => dispatch => {
         .then(
             (response) => {
                 console.log("STATUS:", response.status);
-                dispatch({
-                    type: FETCH_VACANCIES_SUCCESS,
-                    payload: response.data,
-                });
+                dispatch(fetchVacanciesSuccess(response.data));
 
             }
         );
 
 };
+export const asyncFetchCompany = (id) => dispatch => {
+
+    axios.get(BACKEND_URL.concat("/companies/".concat(id)))
+        .then(
+            (response) => {
+                dispatch(fetchCompanySuccess(response.data));
+            }
+        ).catch(error => {
+        console.log(error);
+        dispatch(fetchCompaniesError())
+    });
+
+};
+
+export const asyncFetchCompanies = () => dispatch => {
+
+    axios.get(BACKEND_URL.concat("/companies/"))
+        .then(
+            (response) => {
+                dispatch(fetchCompaniesSuccess(response.data));
+            }
+        ).catch(error => {
+        console.log(error);
+        dispatch(fetchCompaniesError());
+    })
+
+
+};
+
 
 export const asyncFetchUsers = () => dispatch => {
     axios.get(BACKEND_URL.concat("/users/"))
