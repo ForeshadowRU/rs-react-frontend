@@ -15,7 +15,7 @@ class CompaniesPage extends Component {
 
 
     getData() {
-        if (this.props.companies.isFetching)
+        if (this.props.isFetching)
             return (
                 <div className="row">
                     <div className="col">{getLoadingAnimation(loading, "Fetching...")}</div>
@@ -23,15 +23,37 @@ class CompaniesPage extends Component {
             );
         else return (
             <div className="container">
-                <ul>
-                    {this.props.companies.values.map((company) => {
-                        return <li key={company.id}>
-                            <div>{company.id}</div>
-                            <div><Link to={"/companies/".concat(company.id)}>{company.name}</Link></div>
-                            <div>{company.foundationDate}</div>
-                        </li>
-                    })}
-                </ul>
+                <div className="col">
+                    <table className="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Founder</th>
+                            <th scope="col">Foundation Date</th>
+                            <th scope="col">Registration Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.props.companies.values.map(
+                            (company, i) => {
+                                return (
+                                    <tr>
+                                        <td>{i + 1}</td>
+                                        <td><Link to={"/companies/".concat(company.id)}>{company.name}</Link></td>
+                                        <td><Link to={"/users/".concat(company.owner)}>{company.owner}</Link></td>
+                                        <td>{company.foundationDate}</td>
+                                        <td>{company.registrationDate}</td>
+                                    </tr>
+                                )
+                            }
+                        )}
+
+                        </tbody>
+                    </table>
+
+
+                </div>
 
             </div>)
     }
@@ -48,8 +70,10 @@ class CompaniesPage extends Component {
 }
 
 export default connect(
-    (state) => ({
-        companies: state.companies,
+    (store) => ({
+        companies: store.companies,
+        users: store.users.values,
+        isFetching: store.companies.isFetching || store.users.isFetching
     }),
     dispatch => ({
             onFetchData: () => {

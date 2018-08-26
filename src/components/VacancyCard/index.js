@@ -28,7 +28,6 @@ class VacancyCard extends Component {
         return (
             <div className="card card-info-border-users">
                 <div className="card-header">
-                    <button className="btn btn-outline-danger float-right">x</button>
                     <h4><Link to={"/vacancies/".concat(vacancy.id)}> {vacancy.name}</Link></h4>
 
                     <Link to={"/companies/".concat(vacancy.author.id)}><h6 className="text-muted">

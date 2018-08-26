@@ -43,20 +43,21 @@ class NavPanel extends Component {
 
             <div className="collapse navbar-collapse" id="navbarColor01">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
+                    <li className="nav-item ">
                         <Link to="/" className="nav-link">
                             Home <span className="sr-only">(current)</span>
                         </Link>
                     </li>
-                    <li className="nav-item">
+                    <li className={"nav-item".concat((this.props.location.pathname.indexOf("/companies") !== -1)
+                        ? " active" : "")}>
                         <Link to="/companies" className="nav-link">
                             Companies <span className="sr-only"/>
                         </Link>
                     </li>
                     <li className="nav-item" onClick={this.props.onPurge}>
-
-                        PURGE STORE <span className="sr-only"/>
-
+                        <div className="nav-link">
+                            PURGE STORE <span className="sr-only"/>
+                        </div>
                     </li>
                 </ul>
                 {user}
@@ -69,8 +70,9 @@ class NavPanel extends Component {
 }
 
 export default connect(
-    state => ({
+    (state) => ({
         currentUser: state.currentUser,
+        location: state.router.location
     }),
     dispatch => ({
         onLogout: () => {
