@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import connect from "react-redux/es/connect/connect";
-import axios from "axios";
-import {BACKEND_URL, USER_AUTH_SUCCESSFUL} from "../../constants";
 import {Redirect} from "react-router-dom";
+import {asyncPost} from "../../functions";
 
 class LoginForm extends Component {
     constructor(props) {
@@ -100,24 +99,3 @@ export default connect(
         },
 
     }))(LoginForm);
-
-export const asyncPost = (json) => dispatch => {
-    let config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        }
-    };
-    axios.post(BACKEND_URL.concat("/public/login"), json, config)
-        .then(
-            (response) => {
-                console.log(response);
-                dispatch({
-                    type: USER_AUTH_SUCCESSFUL,
-                    payload: response.data,
-                });
-
-            }
-        ).catch(error => console.log(error));
-
-};

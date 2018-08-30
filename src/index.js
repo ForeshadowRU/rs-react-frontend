@@ -17,7 +17,7 @@ import cubeLoading from './resources/svg/cube-loading.gif'
 import {PersistGate} from 'redux-persist/integration/react'
 import RegistrationForm from "./components/Authentication/RegistrationForm";
 import UserPage from './components/UserPage'
-
+import NewVacancy from './components/NewVacancy'
 
 const {store, persistor} = configureStore();
 ReactDOM.render(
@@ -28,11 +28,13 @@ ReactDOM.render(
                 <Switch>
                     <Route exact path='/' component={Home}/>
                     <Route path='/signup' component={Authentication}/>
+                    <Route path="/vacancies/new" component={NewVacancy}/>
                     <Route path='/vacancies/:id' component={VacancyPage}/>
                     <Route path='/companies/:id' component={CompanyPage}/>
                     <Route path='/companies' component={CompanyList}/>
                     <Route path='/register/' component={RegistrationForm}/>
                     <Route path='/users/:username' component={UserPage}/>
+
                 </Switch>
             </ConnectedRouter>
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BACKEND_URL} from "./constants";
+import {ADD_VACANCY, BACKEND_URL, USER_AUTH_SUCCESSFUL} from "./constants";
 import React from "react";
 import {
     fetchCompaniesError,
@@ -21,6 +21,59 @@ export const asyncFetchVacancies = () => dispatch => {
         );
 
 };
+export const asyncPost = (json) => dispatch => {
+    let config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+    };
+    axios.post(BACKEND_URL.concat("/public/login"), json, config)
+        .then(
+            (response) => {
+                console.log(response);
+                dispatch({
+                    type: USER_AUTH_SUCCESSFUL,
+                    payload: response.data,
+                });
+
+            }
+        ).catch(error => console.log(error));
+
+};
+export const currencySignToString = (sign) => {
+    switch (sign) {
+        case "₽":
+            return "RUB";
+        case "$":
+            return "USD";
+        case "€":
+            return "EUR";
+        default:
+            return sign;
+    }
+
+};
+
+export const asyncPostVacancy = (json, config) => dispatch => {
+    let cfg = config || {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+    };
+    axios.post(BACKEND_URL.concat("/vacancies/"), json, cfg)
+        .then(
+            (response) => {
+                dispatch({
+                    type: ADD_VACANCY,
+                    payload: response,
+                })
+
+            }
+        ).catch(error => console.log(error));
+};
+
 export const asyncFetchCompany = (id) => dispatch => {
 
     axios.get(BACKEND_URL.concat("/companies/".concat(id)))

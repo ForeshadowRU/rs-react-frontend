@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import "bootswatch/dist/flatly/bootstrap.css"
 import RequirementList from "../RequirementList";
 import {Link} from 'react-router-dom'
+import connect from "react-redux/es/connect/connect";
 
 class VacancyCard extends Component {
 
@@ -25,22 +26,23 @@ class VacancyCard extends Component {
 
     render() {
         const vacancy = this.props.vacancy;
+        const author = this.props.companies.values.filter(cmp => cmp.id === vacancy.authorId)[0];
         return (
             <div className="card card-info-border-users">
                 <div className="card-header">
                     <h4><Link to={"/vacancies/".concat(vacancy.id)}> {vacancy.name}</Link></h4>
 
-                    <Link to={"/companies/".concat(vacancy.author.id)}><h6 className="text-muted">
-                        <u>{vacancy.author.name}</u></h6></Link>
+                    <Link to={"/companies/".concat(vacancy.authorId)}><h6 className="text-muted">
+                        <u>{author.name}</u></h6></Link>
                 </div>
 
 
                 <div className="card-body">
-                    {vacancy.fullDescription}
+                    {vacancy.description}
                 </div>
 
                 <div style={{"margin": "5px"}}>
-                    <RequirementList requirements={vacancy.requirements}/>
+                    <RequirementList requirements={vacancy.requirements} limit={3}/>
                 </div>
                 <div className="card-footer">
                     <h6>{vacancy.salary} {VacancyCard.currencySign(vacancy.currency)}/{VacancyCard.getTypeLetter(vacancy.type)}
@@ -53,4 +55,12 @@ class VacancyCard extends Component {
     }
 }
 
-export default VacancyCard;
+export default connect(
+    (store, ownProps) => ({
+        companies: store.companies,
+        vacancies: store.vacancies,
+        users: store.users,
+        ownProps,
+    }),
+    dispatch => ({}
+    ))(VacancyCard);

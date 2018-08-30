@@ -1,4 +1,4 @@
-export const BACKEND_URL = "http://localhost:8080";
+export const BACKEND_URL = "https://recruiting-server.herokuapp.com";//http://localhost:8080";
 export const ADD_COMPANY = "ADD_COMPANY";
 export const REMOVE_COMPANY = "REMOVE_COMPANY";
 export const USER_AUTH_SUCCESSFUL = "USER_AUTH_SUCCESSFUL";
