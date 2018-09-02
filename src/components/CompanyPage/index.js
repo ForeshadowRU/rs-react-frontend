@@ -56,7 +56,7 @@ class CompanyPage extends Component {
                     Founded At:<h6>{this.state.company.foundationDate}</h6>
                 </div>
                 <div>
-                    <h6>Founder: <Link to={"users/".concat(this.state.company.owner)}>{this.state.company.owner}</Link>
+                    <h6>Founder: <Link to={"/users/".concat(this.state.company.owner)}>{this.state.company.owner}</Link>
                     </h6>
                 </div>
             </div>
