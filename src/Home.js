@@ -57,7 +57,11 @@ class Home extends Component {
                     <NavPanel/>
                 </div>
                 <div>
-
+                    <div className="alert alert-dismissible alert-info">
+                        <button type="button" className="close" data-dismiss="alert">&times;</button>
+                        <span className="badge badge-warning">Gold bars</span> marks important skills <br/>
+                        <span className="badge badge-info">Blue bars</span> marks preferable skills.
+                    </div>
                     {(this.props.isFetching) ?
                         getLoadingAnimation(cubeLoading, "Fetching Data")
                         :

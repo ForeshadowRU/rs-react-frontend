@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ADD_VACANCY, BACKEND_URL, USER_AUTH_SUCCESSFUL} from "./constants";
+import {ADD_VACANCY, BACKEND_URL, FETCH_VACANCIES_ERROR, USER_AUTH_SUCCESSFUL} from "./constants";
 import React from "react";
 import {
     fetchCompaniesError,
@@ -18,7 +18,10 @@ export const asyncFetchVacancies = () => dispatch => {
                 dispatch(fetchVacanciesSuccess(response.data));
 
             }
-        );
+        ).catch(error => {
+        console.log(error.data);
+        dispatch({type: FETCH_VACANCIES_ERROR});
+    });
 
 };
 export const asyncPost = (json) => dispatch => {

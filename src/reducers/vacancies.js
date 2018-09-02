@@ -2,6 +2,7 @@ import {
     ADD_VACANCY,
     DELETE_VACANCY,
     FETCH_VACANCIES,
+    FETCH_VACANCIES_ERROR,
     FETCH_VACANCIES_SUCCESS,
     INVALIDATE_VACANCIES
 } from "../constants";
@@ -22,6 +23,8 @@ export default function (state = initialState, action) {
             return {...state, values: action.payload, timestamp: new Date(), isFetching: false, invalidated: false};
         case INVALIDATE_VACANCIES:
             return {...state, invalidated: true};
+        case FETCH_VACANCIES_ERROR:
+            return {...state, isFetching: false};
         case ADD_VACANCY:
             return {...state, values: state.values.push(action.payload)};
         case DELETE_VACANCY:
