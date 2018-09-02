@@ -4,6 +4,7 @@ import NavPanel from "../NavPanel";
 import {fetchCompanyStart} from "../../actionCreators";
 import {asyncFetchCompany, getLoadingAnimation} from "../../functions";
 import cube from '../../resources/svg/cube-loading.gif'
+import {Link} from "react-router-dom";
 
 class CompanyPage extends Component {
 
@@ -50,11 +51,13 @@ class CompanyPage extends Component {
                 <div className="border-dark">
                     <h2>{this.state.company.name}</h2>
                 </div>
+                <h5>{this.state.company.email}</h5>
                 <div className="border-dark">
-                    <h6>{this.state.company.description}</h6>
+                    Founded At:<h6>{this.state.company.foundationDate}</h6>
                 </div>
-                <div className="border-dark">
-                    Registered At:<h6>{this.state.company.registrationDate}</h6>
+                <div>
+                    <h6>Founder: <Link to={"users/".concat(this.state.company.owner)}>{this.state.company.owner}</Link>
+                    </h6>
                 </div>
             </div>
         </div>
