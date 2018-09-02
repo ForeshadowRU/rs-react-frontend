@@ -30,7 +30,7 @@ class CompanyPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let element = nextProps.companies.filter((company) => company.id === nextProps.own.match.params.id)[0];
+        let element = nextProps.companies.values.filter((company) => company.id === nextProps.own.match.params.id)[0];
         this.setState({...this.state, company: element, isFetching: nextProps.isFetching});
     }
 
